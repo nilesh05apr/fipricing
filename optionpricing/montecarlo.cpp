@@ -15,7 +15,26 @@ using namespace std;
 using std::normal_distribution;
 using std::mt19937_64;
 
-double stdNormalGeneration(int n, int seed)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+double stdNormalGeneration(int seed)
 {
     mt19937_64 mtre(seed);
     normal_distribution<> stnd;
@@ -24,7 +43,7 @@ double stdNormalGeneration(int n, int seed)
 
 double montecarlo(double initPrice, double time, double returnRate, double volatility, double seed)
 {
-    double epsilon =  stdNormalGeneration(1,seed);
+    double epsilon =  stdNormalGeneration(seed);
     double param_1 = returnRate - ((volatility * volatility) / 2);
     double param_2 = volatility * sqrt(time) * epsilon;
     return initPrice * exp(param_1*time + param_2);
@@ -70,7 +89,7 @@ int main()
     Paytype pt = CALL;  //'Payoff type call or put'
 
     vector <double> seeds(n_samples);
-    std::iota(seeds.begin(), seeds.end(),stdNormalGeneration(1,seed));
+    std::iota(seeds.begin(), seeds.end(),stdNormalGeneration(seed));
 
 
 
@@ -87,6 +106,8 @@ int main()
 
 
     cout<<getOptionPrice(n_samples,paths,strike, pt)<<endl;
+
+
 
 
 
