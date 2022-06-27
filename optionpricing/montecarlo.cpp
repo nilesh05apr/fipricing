@@ -8,41 +8,17 @@
 #include <limits>
 #include <random>
 
-
-
-
 using namespace std;
 using std::normal_distribution;
 using std::mt19937_64;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-double stdNormalGeneration(int seed)
-{
+double stdNormalGeneration(int seed){
     mt19937_64 mtre(seed);
     normal_distribution<> stnd;
     return stnd(mtre);
 }
 
-double montecarlo(double initPrice, double time, double returnRate, double volatility, double seed)
-{
+double montecarlo(double initPrice, double time, double returnRate, double volatility, double seed){
     double epsilon =  stdNormalGeneration(seed);
     double param_1 = returnRate - ((volatility * volatility) / 2);
     double param_2 = volatility * sqrt(time) * epsilon;
@@ -54,10 +30,8 @@ enum Paytype {
         PUT    
         };
 
-double payoffPrice(double terminalPrice, double strikPrice, Paytype pt)
-{
-    switch(pt)
-    {
+double payoffPrice(double terminalPrice, double strikPrice, Paytype pt){
+    switch(pt){
         case CALL: return std::max(terminalPrice - strikPrice, 0.0); break;
         case PUT: return std::max(strikPrice - terminalPrice, 0.0); break;
         default: return 0.0; break;
@@ -65,11 +39,9 @@ double payoffPrice(double terminalPrice, double strikPrice, Paytype pt)
     
 }
 
-double getOptionPrice(int n_samples, vector<vector<double>> paths, double strikePrice, Paytype pt)
-{
+double getOptionPrice(int n_samples, vector<vector<double>> paths, double strikePrice, Paytype pt){
     vector<double> finalPrices(n_samples);
-    for(auto x: paths)
-    {
+    for(auto x: paths){
         finalPrices.push_back(payoffPrice(x.back(), strikePrice, pt));
     }
     return std::accumulate(finalPrices.begin(), finalPrices.end(), 0.0) / (double)n_samples; 
@@ -77,13 +49,12 @@ double getOptionPrice(int n_samples, vector<vector<double>> paths, double strike
 
 
 
-int main()
-{
+int main(){
     int timeperiod = 30; //30 days
     double volatility = 0.02; //2% volatility
     double initPrice = 600.0; // initial price of derivative (spot price)
     double rate = 0.06; //6% expected return rate
-    int n_samples = 5;
+    int n_samples = 1e5;
     double seed = time(nullptr);
     double strike = 650.0; // strike price of derivative
     Paytype pt = CALL;  //'Payoff type call or put'
@@ -106,6 +77,8 @@ int main()
 
 
     cout<<getOptionPrice(n_samples,paths,strike, pt)<<endl;
+
+    cout<<montecarlo(1000.0,30,0.06,0.02,time(nullptr))<<endl;
 
 
 
