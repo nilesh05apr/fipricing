@@ -25,12 +25,12 @@ int main() {
     std::cin>>rate;
     std::cout<<"Enter Strike price of the option: ";
     std::cin>>strike;
-    std::cout<<"Press 1 for CALL                          Press 0 for PUT";
+    std::cout<<"Press 1 for CALL:                           Press 0 for PUT: ";
     std::cin>>x;
     x == 1 ? pt = Paytype::CALL : pt = Paytype::PUT;
 
     MonteCarlo mcp = MonteCarlo(timeperiod,volatility,initPrice,rate,strike,pt,n_samples);
-    std::cout<<mcp.getOptionPrice()<<std::endl;
+    std::cout<<"Tentative price of the option will be: "<<mcp.getOptionPrice()<<std::endl;
 
 
     return 0;

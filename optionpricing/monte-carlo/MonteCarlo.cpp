@@ -26,8 +26,6 @@ MonteCarlo::MonteCarlo(int time, double vol, double spot, double rate, double st
                         this->ptype = pt_;
                         this->paths.resize(this->n_samples, vector<double>(this->timeperiod,this->initPrice));
                         this->seeds.reserve(this->n_samples);
-                        std::iota(this->seeds.begin(),this->seeds.end(),this->stdNormalGeneration(this->seed));
-
 }
 
 
@@ -54,6 +52,7 @@ double MonteCarlo::payoffPrice(double terminalPrice, double strikPrice) {
 }
 
 double MonteCarlo::getOptionPrice() {
+    std::iota(this->seeds.begin(),this->seeds.end(),this->stdNormalGeneration(this->seed));
     for(int i = 0; i < n_samples; i++){
         for(int j = 1; j < timeperiod; j++){
             this->paths[i][j] = calc(this->paths[i][j-1], this->seeds[i]);
