@@ -63,7 +63,6 @@ int main(){
     std::iota(seeds.begin(), seeds.end(),stdNormalGeneration(seed));
 
 
-
     vector<vector<double>> paths(n_samples, vector<double>(timeperiod,600)); // initialise a 2d matrix with all values = 600
     
 
@@ -77,14 +76,6 @@ int main(){
 
 
     cout<<getOptionPrice(n_samples,paths,strike, pt)<<endl;
-
-    cout<<montecarlo(1000.0,30,0.06,0.02,time(nullptr))<<endl;
-
-
-
-
-
-
 
     return 0;
 }

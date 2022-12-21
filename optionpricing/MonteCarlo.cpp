@@ -8,19 +8,20 @@
 #include <limits>
 #include <random>
 
-
-
-
 using namespace std;
 using std::normal_distribution;
 using std::mt19937_64;
-
-
 
 enum Paytype {
     CALL,
     PUT
 };
+
+double stdNormalGeneration(double seed){
+    mt19937_64 mtre(seed);
+    normal_distribution<> stnd;
+    return stnd(mtre);
+} 
 
 
 class MonteCarloPricing{
@@ -40,13 +41,7 @@ public:
     vector<vector<double>> paths;
     vector <double> seeds;
 
-    MonteCarloPricing(int time, 
-                    double vol, 
-                    double spot, 
-                    double rate, 
-                    double strike, 
-                    Paytype pt_, 
-                    int n_samples=5000){
+    MonteCarloPricing(int time, double vol, double spot, double rate, double strike, Paytype pt_, int n_samples=5000){
                         this->timeperiod = time;
                         this->volatility = vol;
                         this->initPrice = spot;
@@ -56,15 +51,9 @@ public:
                         this->ptype = pt_;
                         this->paths.resize(this->n_samples, vector<double>(this->timeperiod,this->initPrice));
                         this->seeds.reserve(this->n_samples);
-                        std::iota(this->seeds.begin(),this->seeds.end(),this->stdNormalGeneration(this->seed));
+                        std::iota(this->seeds.begin(),this->seeds.end(),stdNormalGeneration(this->seed));
     }
     
-    double stdNormalGeneration(double seed){
-        mt19937_64 mtre(seed);
-        normal_distribution<> stnd;
-        return stnd(mtre);
-    } 
-
     double montecarlo(double initPrice, double seed){
         double epsilon =  stdNormalGeneration(seed);
         double param_1 = this->rate - ((this->volatility * this->volatility) / 2);
@@ -96,22 +85,6 @@ public:
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main()
 {
     int timeperiod = 30;                    //30 days
@@ -124,13 +97,7 @@ int main()
     Paytype pt = CALL;                      //'Payoff type call or put'
 
     MonteCarloPricing mcp = MonteCarloPricing(timeperiod,volatility,initPrice,rate,strike,pt,n_samples);
-    // cout<<mcp.stdNormalGeneration(time(nullptr))<<endl;
-    // cout<<mcp.montecarlo(1000.0,time(nullptr))<<endl;
     cout<<mcp.getOptionPrice()<<endl;
-
-    for(auto x: mcp.seeds){
-        cout<<x<<" ";
-    }
 
     return 0;
 }
