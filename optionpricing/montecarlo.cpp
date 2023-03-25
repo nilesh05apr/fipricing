@@ -54,9 +54,9 @@ int main(){
     double volatility = 0.02; //2% volatility
     double initPrice = 600.0; // initial price of derivative (spot price)
     double rate = 0.06; //6% expected return rate
-    int n_samples = 1e5;
+    int n_samples = 1e3;
     double seed = time(nullptr);
-    double strike = 650.0; // strike price of derivative
+    double strike = 550.0; // strike price of derivative
     Paytype pt = CALL;  //'Payoff type call or put'
 
     vector <double> seeds(n_samples);
