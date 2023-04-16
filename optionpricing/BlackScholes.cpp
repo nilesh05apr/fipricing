@@ -43,7 +43,7 @@ double BlackScholes(double S, double K, double r, double sigma, double T, Paytyp
 
 int main(){
     double S = 100; //current price of the underlying
-    double K = 100; //strike price of the option
+    double K = 90; //strike price of the option
     double r = 0.05; //risk-free interest rate
     double sigma = 0.2; //volatility of the underlying
     double T = 1; //time to maturity of the option in years
