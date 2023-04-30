@@ -20,6 +20,7 @@ class MonteCarlo {
     double initPrice;              // initial price of derivative (spot price)
     double rate;                   // expected return rate
     int n_samples;
+    double delta_t;
     double seed = time(nullptr);
     double strike;                  // strike price of derivative
     Paytype ptype;                  //'Payoff type call or put'

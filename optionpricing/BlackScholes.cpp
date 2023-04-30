@@ -42,11 +42,11 @@ double BlackScholes(double S, double K, double r, double sigma, double T, Paytyp
 }
 
 int main(){
-    double S = 100; //current price of the underlying
-    double K = 90; //strike price of the option
+    double S = 1200; //current price of the underlying
+    double K = 1090; //strike price of the option
     double r = 0.05; //risk-free interest rate
     double sigma = 0.2; //volatility of the underlying
-    double T = 1; //time to maturity of the option in years
+    double T = 90/365.0; //time to maturity of the option in years
     Paytype paytype = CALL;
     double price = BlackScholes(S, K, r, sigma, T, paytype);
     cout << "The price of the option is " << price << endl;

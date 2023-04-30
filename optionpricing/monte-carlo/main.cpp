@@ -21,16 +21,21 @@ int main() {
     std::cin>>timeperiod;
     std::cout<<"Enter Volatility in decimals: ";
     std::cin>>volatility;
-    std::cout<<"Enter Expected return rate in decimals: ";
+    std::cout<<"Enter Expected return rate per annum in decimals: ";
     std::cin>>rate;
     std::cout<<"Enter Strike price of the option: ";
     std::cin>>strike;
     std::cout<<"Press 1 for CALL:                           Press 0 for PUT: ";
     std::cin>>x;
     x == 1 ? pt = Paytype::CALL : pt = Paytype::PUT;
+    std::cout<<"Enter number of samples: ";
+    std::cin>>n_samples;
+
+
 
     MonteCarlo mcp = MonteCarlo(timeperiod,volatility,initPrice,rate,strike,pt,n_samples);
-    std::cout<<"Tentative price of the option will be: "<<mcp.getOptionPrice()<<std::endl;
+    double price = mcp.getOptionPrice();
+    std::cout<<"Calculated price of the option will be: "<<price<<std::endl;
 
 
     return 0;
