@@ -11,6 +11,7 @@
 
 using namespace std;
 using std::normal_distribution;
+using std::lognormal_distribution;
 using std::mt19937_64;
 
 enum Paytype {
@@ -20,7 +21,7 @@ enum Paytype {
 
 double stdNormalGeneration(double seed){
     mt19937_64 mtre(seed);
-    normal_distribution<> stnd;
+    lognormal_distribution<> stnd;
     return stnd(mtre);
 }
 
